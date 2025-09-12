@@ -1,17 +1,855 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SeedHub - 杭州浙江郊野徒步社区</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeedHub - 杭州浙江登山徒步指南</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #4a7c59;
+            --light-green: #6b9b7f;
+            --bg-green: #f7faf8;
+            --text-dark: #2d3748;
+            --text-gray: #718096;
+            --border-light: #e2e8f0;
+            --white: #ffffff;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: var(--bg-green);
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* 顶部导航栏 */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 20px 16px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+
+        /* 主要区域容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero 区域 */
+        .hero {
+            background: var(--white);
+            padding: 60px 0 40px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .hero-description {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-top: 4px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3d6b4a;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: var(--white);
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            color: var(--primary-green);
+        }
+
+        .section-link {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .section-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 路线卡片 */
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .route-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .route-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .route-image {
+            height: 160px;
+            background: linear-gradient(135deg, var(--light-green), var(--primary-green));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .route-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .route-image i {
+            font-size: 32px;
+            z-index: 1;
+        }
+
+        .route-info {
+            padding: 16px;
+        }
+
+        .route-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .route-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-gray);
+            gap: 4px;
+        }
+
+        .meta-item i {
+            width: 12px;
+            font-size: 11px;
+            color: var(--primary-green);
+        }
+
+        .route-description {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .route-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--bg-green);
+            color: var(--primary-green);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            border: 1px solid rgba(74, 124, 89, 0.2);
+        }
+
+        /* 难度指示器 */
+        .difficulty {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+
+        .difficulty-star {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            background: #e2e8f0;
+        }
+
+        .difficulty-star.filled {
+            background: var(--primary-green);
+        }
+
+        /* 功能卡片 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: var(--primary-green);
+            font-size: 20px;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .feature-description {
+            font-size: 13px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* 摄影作品 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1976d2;
+            font-size: 24px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f7fafc;
+        }
+
+        .sidebar-list li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-list a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .sidebar-list a:hover {
+            color: var(--primary-green);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--border-light);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 6px;
+        }
+
+        .footer-section ul a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-section ul a:hover {
+            color: var(--primary-green);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 12px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 16px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero-stats {
+                gap: 20px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .routes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 两栏布局 */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                SeedHub
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#" class="nav-link active">首页</a></li>
+                    <li class="nav-item"><a href="#routes" class="nav-link">路线</a></li>
+                    <li class="nav-item"><a href="#stories" class="nav-link">记录</a></li>
+                    <li class="nav-item"><a href="#gallery" class="nav-link">摄影</a></li>
+                    <li class="nav-item"><a href="#guide" class="nav-link">指南</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>杭州・浙江 登山徒步指南</h1>
+                <p class="hero-subtitle">发现身边的山野之美</p>
+                <p class="hero-description">精选优质徒步路线，分享真实体验故事，提供专业指导建议。让每一次出行都安全、愉快、有收获。</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <div class="stat-label">精选路线</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">200+</span>
+                        <div class="stat-label">徒步记录</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1000+</span>
+                        <div class="stat-label">用户信赖</div>
+                    </div>
+                </div>
+                
+                <div class="hero-buttons">
+                    <a href="#routes" class="btn btn-primary">
+                        <i class="fas fa-map" style="margin-right: 6px;"></i>
+                        查看路线
+                    </a>
+                    <a href="#guide" class="btn btn-outline">
+                        <i class="fas fa-book-open" style="margin-right: 6px;"></i>
+                        新手指南
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-layout">
+                <!-- 左侧主要内容 -->
+                <div class="main-column">
+                    <!-- 热门路线 -->
+                    <section id="routes" class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-mountain"></i>
+                                热门徒步路线
+                            </h2>
+                            <a href="#" class="section-link">查看全部 →</a>
+                        </div>
+                        
+                        <div class="routes-grid">
+                            <div class="route-card">
+                                <div class="route-image">
+                                    <i class="fas fa-mountain"></i>
+                                </div>
+                                <div class="route-info">
+                                    <h3 class="route-title">西湖群山环线</h3>
+                                    <div class="route-meta">
+                                        <div class="meta-item">
+                                            <i class="fas fa-route"></i>
+                                            <span>12.5km</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span>4-5小时</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-mountain"></i>
+                                            <span>海拔 ±400m</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-star"></i>
+                                            <div class="difficulty">
+                                                <div class="difficulty-star filled"></div>
+                                                <div class="difficulty-star filled"></div>
+                                                <div class="difficulty-star"></div>
+                                                <div class="difficulty-star"></div>
+                                                <div class="difficulty-star"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="route-description">经典的杭州城郊徒步路线，途经龙井村、九溪十八涧，可俯瞰西湖全景。适合初学者的入门级路线。</p>
+                                    <div class="route-tags">
+                                        <span class="tag">适合新手</span>
+                                        <span class="tag">风景优美</span>
+                                        <span class="tag">交通便利</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="route-card">
+                                <div class="route-image">
+                                    <i class="fas fa-tree"></i>
+                                </div>
+                                <div class="route-info">
+                                    <h3 class="route-title">天目山古道</h3>
+                                    <div class="route-meta">
+                                        <div class="meta-item">
+                                            <i class="fas fa-route"></i>
+                                            <span>15.2km</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span>6-7小时</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-mountain"></i>
+                                            <span>海拔 ±800m</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-star"></i>
+                                            <div class="difficulty">
+                                                <div class="difficulty-star filled"></div>
+                                                <div class="difficulty-star filled"></div>
+                                                <div class="difficulty-star filled"></div>
+                                                <div class="difficulty-star"></div>
+                                                <div class="difficulty-star"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="route-description">历史悠久的古道，沿途古树参天，溪水潺潺。春季杜鹃花开，秋季红叶满山。需要一定体能基础。</p>
+                                    <div class="route-tags">
+                                        <span class="tag">古道文化</span>
+                                        <span class="tag">森林浴</span>
+                                        <span class="tag">中等难度</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="route-card">
+                                <div class="route-image">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="route-info">
+                                    <h3 class="route-title">莫干山竹径</h3>
+                                    <div class="route-meta">
+                                        <div class="meta-item">
+                                            <i class="fas fa-route"></i>
+                                            <span>8.8km</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span>3-4小时</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-mountain"></i>
+                                            <span>海拔 ±300m</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-star"></i>
+                                            <div class="difficulty">
+                                                <div class="difficulty-star filled"></div>
+                                                <div class="difficulty-star filled"></div>
+                                                <div class="difficulty-star"></div>
+                                                <div class="difficulty-star"></div>
+                                                <div class="difficulty-star"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="route-description">穿越茂密竹海，感受江南山水的诗意。路况良好，适合休闲徒步和家庭出游。</p>
+                                    <div class="route-tags">
+                                        <span class="tag">竹海风光</span>
+                                        <span class="tag">轻松休闲</span>
+                                        <span class="tag">空气清新</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 功能特色 -->
+                    <section class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-compass"></i>
+                                平台特色
+                            </h2>
+                        </div>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                </div>
+                                <h3 class="feature-title">精准路线信息</h3>
+                                <p class="feature-description">详细的GPS轨迹、海拔图表、关键节点标记，让你的每次出行都有充分准备。</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h3 class="feature-title">真实用户分享</h3>
+                                <p class="feature-description">来自真实徒步者的体验记录，包含路况更新、季节变化、实用建议。</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h3 class="feature-title">安全保障</h3>
+                                <p class="feature-description">完善的安全提示、紧急联系方式、天气预警，确保每次出行的安全。</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h3 class="feature-title">移动端适配</h3>
+                                <p class="feature-description">专为户外使用优化，离线地图支持，即使没有网络也能正常使用。</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 摄影作品 -->
+                    <section id="gallery" class="section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-camera"></i>
+                                精选摄影
+                            </h2>
+                            <a href="#" class="section-link">查看更多 →</a>
+                        </div>
+                        
+                        <div class="gallery-grid">
+                            <div class="gallery-item"><i class="fas fa-mountain"></i></div>
+                            <div class="gallery-item"><i class="fas fa-tree"></i></div>
+                            <div class="gallery-item"><i class="fas fa-water"></i></div>
+                            <div class="gallery-item"><i class="fas fa-sun"></i></div>
+                            <div class="gallery-item"><i class="fas fa-cloud"></i></div>
+                            <div class="gallery-item"><i class="fas fa-leaf"></i></div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 右侧边栏 -->
+                <aside class="sidebar-column">
+                    <div class="sidebar">
+                        <h3 class="sidebar-title">最新动态</h3>
+                        <ul class="sidebar-list">
+                            <li><a href="#">春季登山注意事项及装备推荐</a></li>
+                            <li><a href="#">西湖群山路况更新（3月12日）</a></li>
+                            <li><a href="#">莫干山竹笋季最佳观赏时间</a></li>
+                            <li><a href="#">天目山古道维护完成重新开放</a></li>
+                            <li><a href="#">徒步摄影技巧分
