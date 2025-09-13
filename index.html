@@ -252,6 +252,36 @@
             color: var(--accent);
         }
 
+        .knowledge-link {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .knowledge-link:hover {
+            color: var(--accent);
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .read-more-btn:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
         /* 突出显示区域 */
         .highlight-section {
             background: var(--primary-black);
@@ -543,65 +573,71 @@
             <div class="knowledge-grid">
                 <div class="knowledge-column">
                     <div class="knowledge-category">
-                        <h3>装备选择</h3>
+                        <h3><a href="hiking-gear-guide.html" class="knowledge-link">装备选择</a></h3>
                         <ul class="knowledge-list">
                             <li>选择合适的徒步鞋，确保防滑耐磨</li>
                             <li>准备透气吸汗的速干衣物</li>
                             <li>背包容量根据路程选择，一般25-35L</li>
                             <li>必备雨具，山区天气多变</li>
                         </ul>
+                        <a href="hiking-gear-guide.html" class="read-more-btn">阅读详细指南 →</a>
                     </div>
                     
                     <div class="knowledge-category">
-                        <h3>安全须知</h3>
+                        <h3><a href="hiking-safety-guide.html" class="knowledge-link">安全须知</a></h3>
                         <ul class="knowledge-list">
                             <li>提前了解路线信息和天气情况</li>
                             <li>告知家人朋友出行计划</li>
                             <li>携带急救包和常用药品</li>
                             <li>保持团队行进，不要单独行动</li>
                         </ul>
+                        <a href="hiking-safety-guide.html" class="read-more-btn">阅读详细指南 →</a>
                     </div>
                     
                     <div class="knowledge-category">
-                        <h3>体能准备</h3>
+                        <h3><a href="fitness-preparation.html" class="knowledge-link">体能准备</a></h3>
                         <ul class="knowledge-list">
                             <li>循序渐进，从简单路线开始</li>
                             <li>平时保持适量运动习惯</li>
                             <li>出发前进行热身运动</li>
                             <li>注意节奏，避免过度疲劳</li>
                         </ul>
+                        <a href="fitness-preparation.html" class="read-more-btn">阅读详细指南 →</a>
                     </div>
                 </div>
                 
                 <div class="knowledge-column">
                     <div class="knowledge-category">
-                        <h3>导航技巧</h3>
+                        <h3><a href="navigation-skills.html" class="knowledge-link">导航技巧</a></h3>
                         <ul class="knowledge-list">
                             <li>学会使用地图和指南针</li>
                             <li>下载离线地图到手机</li>
                             <li>注意观察路标和地形特征</li>
                             <li>GPS设备要充足电并备用电源</li>
                         </ul>
+                        <a href="navigation-skills.html" class="read-more-btn">阅读详细指南 →</a>
                     </div>
                     
                     <div class="knowledge-category">
-                        <h3>气候应对</h3>
+                        <h3><a href="weather-adaptation.html" class="knowledge-link">气候应对</a></h3>
                         <ul class="knowledge-list">
                             <li>春季注意防风保暖，带雨具</li>
                             <li>夏季防晒防中暑，多饮水</li>
                             <li>秋季温差大，准备分层衣物</li>
                             <li>冬季防寒防滑，选择合适路线</li>
                         </ul>
+                        <a href="weather-adaptation.html" class="read-more-btn">阅读详细指南 →</a>
                     </div>
                     
                     <div class="knowledge-category">
-                        <h3>急救常识</h3>
+                        <h3><a href="first-aid-guide.html" class="knowledge-link">急救常识</a></h3>
                         <ul class="knowledge-list">
                             <li>扭伤处理：冷敷、固定、休息</li>
                             <li>中暑急救：阴凉处休息、降温</li>
                             <li>外伤处理：清洁、消毒、包扎</li>
                             <li>迷路应对：原地等待、求救信号</li>
                         </ul>
+                        <a href="first-aid-guide.html" class="read-more-btn">阅读详细指南 →</a>
                     </div>
                 </div>
             </div>

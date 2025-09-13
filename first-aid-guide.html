@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>急救常识指南 - SeedHub 徒步知识</title>
+    <style>
+        :root {
+            --primary-color: #2c5530;
+            --secondary-color: #4a7c59;
+            --accent-color: #7fb069;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --border-color: #e9ecef;
+            --emergency-color: #dc3545;
+            --warning-color: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--white);
+        }
+
+        .navbar {
+            background: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .article-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .emergency-card {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--emergency-color);
+        }
+
+        .emergency-card h3 {
+            color: var(--emergency-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .emergency-card .steps {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .emergency-card .steps li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .emergency-card .steps li:last-child {
+            border-bottom: none;
+        }
+
+        .emergency-card .steps li:before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0.8rem;
+            background: var(--emergency-color);
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .emergency-card .steps {
+            counter-reset: step-counter;
+        }
+
+        .first-aid-kit {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 2px solid var(--emergency-color);
+        }
+
+        .first-aid-kit h3 {
+            color: var(--emergency-color);
+            margin-bottom: 1rem;
+        }
+
+        .kit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .kit-category {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #fbb6ce;
+        }
+
+        .kit-category h4 {
+            color: var(--emergency-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .kit-category ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .kit-category li {
+            padding: 0.2rem 0;
+            font-size: 0.9rem;
+        }
+
+        .kit-category li:before {
+            content: "•";
+            color: var(--emergency-color);
+            margin-right: 0.5rem;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        .emergency-contacts {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .emergency-contacts h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .contact-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--emergency-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--secondary-color);
+        }
+
+        .reference {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .emergency-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .kit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">SeedHub</a>
+            <ul class="nav-links">
+                <li><a href="index.html#routes">徒步路线</a></li>
+                <li><a href="index.html#stories">徒步故事</a></li>
+                <li><a href="index.html#photography">摄影作品</a></li>
+                <li><a href="index.html#knowledge">徒步知识</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">首页</a> > <a href="index.html#knowledge">徒步知识</a> > 急救常识指南
+        </div>
+
+        <header class="article-header">
+            <h1 class="article-title">急救常识指南</h1>
+            <p class="article-subtitle">掌握基本急救技能，确保徒步过程中的安全</p>
+        </header>
+
+        <section class="content-section">
+            <h2 class="section-title">常见徒步伤病处理</h2>
+            <div class="emergency-grid">
+                <div class="emergency-card">
+                    <h3>🦵 扭伤处理</h3>
+                    <ol class="steps">
+                        <li><strong>停止活动：</strong>立即停止行走，避免进一步损伤</li>
+                        <li><strong>检查伤情：</strong>轻柔触摸，判断扭伤程度</li>
+                        <li><strong>冷敷处理：</strong>用冰袋或冷水敷15-20分钟</li>
+                        <li><strong>压迫包扎：</strong>用弹性绷带适度包扎固定</li>
+                        <li><strong>抬高患肢：</strong>将受伤部位抬高，减少肿胀</li>
+                        <li><strong>休息观察：</strong>严重时应立即下撤求医</li>
+                    </ol>
+                </div>
+
+                <div class="emergency-card">
+                    <h3>🌡️ 中暑急救</h3>
+                    <ol class="steps">
+                        <li><strong>转移环境：</strong>迅速转移到阴凉通风处</li>
+                        <li><strong>解开衣物：</strong>松解衣领，增加散热</li>
+                        <li><strong>物理降温：</strong>用湿毛巾擦拭身体</li>
+                        <li><strong>补充水分：</strong>小口多次饮用淡盐水</li>
+                        <li><strong>监测体温：</strong>持续观察体温变化</li>
+                        <li><strong>紧急求救：</strong>重度中暑立即呼叫救援</li>
+                    </ol>
+                </div>
+
+                <div class="emergency-card">
+                    <h3>🩹 外伤处理</h3>
+                    <ol class="steps">
+                        <li><strong>止血处理：</strong>用干净纱布直接压迫止血</li>
+                        <li><strong>清洁伤口：</strong>用生理盐水冲洗伤口</li>
+                        <li><strong>消毒杀菌：</strong>用碘伏消毒伤口周围</li>
+                        <li><strong>包扎固定：</strong>用无菌纱布包扎伤口</li>
+                        <li><strong>观察感染：</strong>注意伤口是否有感染迹象</li>
+                        <li><strong>及时就医：</strong>深度伤口需专业医疗处理</li>
+                    </ol>
+                </div>
+
+                <div class="emergency-card">
+                    <h3>🧭 迷路应对</h3>
+                    <ol class="steps">
+                        <li><strong>停止前进：</strong>发现迷路立即停下</li>
+                        <li><strong>保持冷静：</strong>避免恐慌，理性分析</li>
+                        <li><strong>原地等待：</strong>在显眼位置等待救援</li>
+                        <li><strong>发出信号：</strong>使用哨子、手电筒求救</li>
+                        <li><strong>节约体力：</strong>减少不必要的活动</li>
+                        <li><strong>联系救援：</strong>有信号时立即报警求助</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="first-aid-kit">
+                <h3>🎒 徒步急救包必备物品</h3>
+                <p>一个完整的急救包是徒步安全的重要保障，以下是推荐的必备物品清单：</p>
+                
+                <div class="kit-grid">
+                    <div class="kit-category">
+                        <h4>包扎用品</h4>
+                        <ul>
+                            <li>无菌纱布（多种规格）</li>
+                            <li>医用胶带</li>
+                            <li>弹性绷带</li>
+                            <li>创可贴（防水型）</li>
+                            <li>三角巾</li>
+                        </ul>
+                    </div>
+
+                    <div class="kit-category">
+                        <h4>消毒用品</h4>
+                        <ul>
+                            <li>碘伏消毒液</li>
+                            <li>酒精棉片</li>
+                            <li>生理盐水</li>
+                            <li>一次性手套</li>
+                        </ul>
+                    </div>
+
+                    <div class="kit-category">
+                        <h4>常用药品</h4>
+                        <ul>
+                            <li>止痛药（布洛芬）</li>
+                            <li>抗过敏药</li>
+                            <li>腹泻药</li>
+                            <li>感冒药</li>
+                            <li>藿香正气水</li>
+                        </ul>
+                    </div>
+
+                    <div class="kit-category">
+                        <h4>工具用品</h4>
+                        <ul>
+                            <li>医用剪刀</li>
+                            <li>镊子</li>
+                            <li>体温计</li>
+                            <li>安全别针</li>
+                            <li>求救哨</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="warning-box">
+                <h3>⚠️ 重要安全提醒</h3>
+                <ul>
+                    <li><strong>不要移动：</strong>怀疑脊椎受伤时，绝对不要移动伤者</li>
+                    <li><strong>专业救治：</strong>严重外伤、骨折、意识不清应立即求救</li>
+                    <li><strong>药物过敏：</strong>使用任何药物前确认无过敏史</li>
+                    <li><strong>保持记录：</strong>记录伤情发生时间和处理过程</li>
+                    <li><strong>定期检查：</strong>急救包物品要定期检查更新</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">预防措施</h2>
+            <p>预防胜于治疗，以下措施可以大大降低徒步中的受伤风险：</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>充分准备：</strong>了解路线难度，评估个人能力</li>
+                <li><strong>装备检查：</strong>确保装备完好，特别是鞋子和背包</li>
+                <li><strong>体能训练：</strong>提前进行体能训练，增强身体素质</li>
+                <li><strong>团队协作：</strong>结伴而行，相互照应</li>
+                <li><strong>天气关注：</strong>密切关注天气变化，适时调整计划</li>
+                <li><strong>节奏控制：</strong>合理安排休息，避免过度疲劳</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <div class="emergency-contacts">
+                <h3>📞 紧急联系方式</h3>
+                <p>遇到紧急情况时，请立即拨打以下电话：</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div>急救电话</div>
+                        <div class="contact-number">120</div>
+                    </div>
+                    <div class="contact-item">
+                        <div>报警电话</div>
+                        <div class="contact-number">110</div>
+                    </div>
+                    <div class="contact-item">
+                        <div>火警电话</div>
+                        <div class="contact-number">119</div>
+                    </div>
+                    <div class="contact-item">
+                        <div>山地救援</div>
+                        <div class="contact-number">12395</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="reference">
+            <p><strong>参考资料：</strong></p>
+            <p>1. 《登山基础：山区徒步、露营、郊游指南》- 急救与安全章节</p>
+            <p>2. 美国国家公园管理局 - 徒步安全与急救指南</p>
+            <p>3. REI Co-op - 户外急救基础知识</p>
+            <p>4. 中国红十字会 - 急救培训手册</p>
+        </div>
+
+        <a href="index.html#knowledge" class="back-link">← 返回徒步知识</a>
+    </div>
+</body>
+</html>

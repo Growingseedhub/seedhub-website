@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>徒步装备选择指南 - SeedHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --medium-gray: #999999;
+            --white: #ffffff;
+            --accent: #ff6b35;
+            --moma-blue: #0066cc;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-black);
+            background: var(--white);
+        }
+
+        /* MoMA风格的导航栏 */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-black);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--primary-black);
+            text-decoration: none;
+        }
+
+        .back-link {
+            font-size: 16px;
+            color: var(--primary-black);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .back-link:hover {
+            opacity: 0.6;
+        }
+
+        /* 主要内容 */
+        .main-content {
+            margin-top: 80px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 60px 30px;
+        }
+
+        .article-header {
+            margin-bottom: 60px;
+            border-bottom: 3px solid var(--primary-black);
+            padding-bottom: 30px;
+        }
+
+        .article-title {
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .article-subtitle {
+            font-size: 20px;
+            color: var(--medium-gray);
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        .article-meta {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--medium-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 内容区域 */
+        .content-section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .section-intro {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            color: var(--secondary-black);
+        }
+
+        /* 装备网格 */
+        .gear-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .gear-item {
+            border: 2px solid var(--light-gray);
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .gear-item:hover {
+            border-color: var(--primary-black);
+            transform: translateY(-5px);
+        }
+
+        .gear-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .gear-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .gear-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--secondary-black);
+            margin-bottom: 20px;
+        }
+
+        .gear-tips {
+            background: var(--light-gray);
+            padding: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .gear-tips strong {
+            color: var(--accent);
+        }
+
+        /* 专业建议区域 */
+        .expert-advice {
+            background: var(--primary-black);
+            color: var(--white);
+            padding: 60px 40px;
+            margin: 80px 0;
+        }
+
+        .expert-advice h3 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .advice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .advice-item {
+            padding: 20px 0;
+        }
+
+        .advice-item h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .advice-item p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 40px 20px;
+            }
+            
+            .gear-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .expert-advice {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">SeedHub</a>
+            <a href="index.html#knowledge" class="back-link">← 返回知识库</a>
+        </nav>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="main-content">
+        <div class="article-header">
+            <h1 class="article-title">徒步装备选择指南</h1>
+            <p class="article-subtitle">专业装备选择，让每一次山野之行都安全舒适</p>
+            <div class="article-meta">更新时间：2024年1月 | 阅读时间：15分钟</div>
+        </div>
+
+        <!-- 引言 -->
+        <section class="content-section">
+            <p class="section-intro">
+                正确的装备选择是安全徒步的基础。无论是一日徒步还是多日重装，合适的装备不仅能保障安全，更能让你充分享受山野之美。本指南基于专业登山书籍和国际徒步标准，为你提供全面的装备选择建议。
+            </p>
+        </section>
+
+        <!-- 核心装备 -->
+        <section class="content-section">
+            <h2 class="section-title">核心装备</h2>
+            <div class="gear-grid">
+                <div class="gear-item">
+                    <span class="gear-icon">👟</span>
+                    <h3 class="gear-name">徒步鞋</h3>
+                    <p class="gear-description">
+                        徒步鞋是最重要的装备之一。选择时需考虑地形、季节和个人脚型。高帮鞋提供更好的踝关节保护，适合崎岖地形；低帮鞋更轻便，适合平缓路线。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>专业建议：</strong>购买前务必试穿，最好在下午试穿（脚部略微肿胀时），确保有足够空间。新鞋需要磨合期，避免直接穿新鞋进行长距离徒步。
+                    </div>
+                </div>
+
+                <div class="gear-item">
+                    <span class="gear-icon">🎒</span>
+                    <h3 class="gear-name">背包</h3>
+                    <p class="gear-description">
+                        背包容量选择：一日徒步20-30L，过夜徒步40-60L，多日重装60L以上。重点关注背负系统的舒适性和透气性，以及各种口袋的实用性设计。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>装包技巧：</strong>重物靠近背部中央，轻物放在顶部和底部。常用物品放在易取位置，保持背包重心稳定。
+                    </div>
+                </div>
+
+                <div class="gear-item">
+                    <span class="gear-icon">👕</span>
+                    <h3 class="gear-name">服装系统</h3>
+                    <p class="gear-description">
+                        采用三层穿衣法：贴身层（排汗）、保温层（保暖）、外壳层（防风防水）。避免棉质材料，选择快干、透气的合成纤维或美丽诺羊毛。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>季节搭配：</strong>春秋季重点防风保暖，夏季注重防晒透气，冬季加强保温防水。随时根据体感温度调整层次。
+                    </div>
+                </div>
+
+                <div class="gear-item">
+                    <span class="gear-icon">☔</span>
+                    <h3 class="gear-name">防雨装备</h3>
+                    <p class="gear-description">
+                        山区天气变化快，防雨装备必不可少。选择透气性好的冲锋衣，或轻便的雨衣雨裤组合。背包防雨罩也很重要。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>材料选择：</strong>Gore-Tex等高端面料透气性好但价格高，普通防水涂层经济实用。根据使用频率和预算选择。
+                    </div>
+                </div>
+
+                <div class="gear-item">
+                    <span class="gear-icon">🧭</span>
+                    <h3 class="gear-name">导航工具</h3>
+                    <p class="gear-description">
+                        地图、指南针、GPS设备是导航三宝。纸质地图不依赖电源，指南针简单可靠，GPS设备功能强大但需要电源支持。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>使用建议：</strong>学会基础的地图和指南针使用方法，下载离线地图到手机，携带移动电源确保设备电量。
+                    </div>
+                </div>
+
+                <div class="gear-item">
+                    <span class="gear-icon">🔦</span>
+                    <h3 class="gear-name">照明设备</h3>
+                    <p class="gear-description">
+                        头灯是首选，解放双手便于操作。选择LED光源，续航时间长，亮度可调。备用电池或充电宝必不可少。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>亮度选择：</strong>一般徒步200-400流明足够，夜间攀爬需要更高亮度。红光模式有助于保护夜视能力。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 专业建议 -->
+        <section class="expert-advice">
+            <h3>专业建议</h3>
+            <div class="advice-grid">
+                <div class="advice-item">
+                    <h4>装备测试</h4>
+                    <p>所有装备在正式使用前都要进行测试，特别是鞋子、背包等核心装备。在熟悉的环境中测试，发现问题及时调整。</p>
+                </div>
+                <div class="advice-item">
+                    <h4>重量控制</h4>
+                    <p>背包总重量不应超过体重的20%，新手建议控制在15%以内。每件装备都要考虑重量与功能的平衡。</p>
+                </div>
+                <div class="advice-item">
+                    <h4>品质投资</h4>
+                    <p>核心装备值得投资高品质产品，如徒步鞋、背包、冲锋衣等。这些装备直接关系到安全和舒适度。</p>
+                </div>
+                <div class="advice-item">
+                    <h4>维护保养</h4>
+                    <p>定期清洁和保养装备，检查磨损情况。及时更换老化的装备，特别是安全相关的绳索、头盔等。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 季节性装备建议 -->
+        <section class="content-section">
+            <h2 class="section-title">季节性装备建议</h2>
+            
+            <div class="gear-grid">
+                <div class="gear-item">
+                    <span class="gear-icon">🌸</span>
+                    <h3 class="gear-name">春季装备</h3>
+                    <p class="gear-description">
+                        春季温差大，需要灵活的穿衣系统。防风外套、保温中层、快干内衣是基本配置。雨具必备，山区春雨频繁。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>特别提醒：</strong>春季山区可能仍有积雪，根据海拔和路线选择是否需要防滑链或冰爪。
+                    </div>
+                </div>
+
+                <div class="gear-item">
+                    <span class="gear-icon">☀️</span>
+                    <h3 class="gear-name">夏季装备</h3>
+                    <p class="gear-description">
+                        防晒是重点：帽子、太阳镜、防晒霜、长袖快干衣。充足的水和电解质补充剂。轻便透气的装备选择。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>水分补充：</strong>每小时需要200-300ml水分，高温环境下需要增加。携带水质净化设备以备不时之需。
+                    </div>
+                </div>
+
+                <div class="gear-item">
+                    <span class="gear-icon">🍂</span>
+                    <h3 class="gear-name">秋季装备</h3>
+                    <p class="gear-description">
+                        秋季是徒步的黄金季节，但早晚温差大。分层穿衣系统更加重要，保温层和防风层都要准备充分。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>温度管理：</strong>根据海拔变化调整衣物，山顶温度可能比山脚低10-15度。
+                    </div>
+                </div>
+
+                <div class="gear-item">
+                    <span class="gear-icon">❄️</span>
+                    <h3 class="gear-name">冬季装备</h3>
+                    <p class="gear-description">
+                        保温防风是关键：羽绒服、抓绒衣、防风面罩、保温手套。防滑装备如冰爪、雪套。高能量食物和保温水壶。
+                    </p>
+                    <div class="gear-tips">
+                        <strong>安全提醒：</strong>冬季徒步风险较高，建议有经验者带领，携带紧急避难装备如应急毯、哨子等。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 返回链接 -->
+        <div style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 2px solid var(--light-gray);">
+            <a href="index.html#knowledge" class="back-link" style="font-size: 18px; padding: 15px 30px; border: 2px solid var(--primary-black); text-decoration: none; display: inline-block; transition: all 0.3s ease;">返回知识库</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>气候应对指南 - SeedHub 徒步知识</title>
+    <style>
+        :root {
+            --primary-color: #2c5530;
+            --secondary-color: #4a7c59;
+            --accent-color: #7fb069;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --border-color: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--white);
+        }
+
+        .navbar {
+            background: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .article-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .season-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .season-card {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .season-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .season-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .season-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .season-card li:last-child {
+            border-bottom: none;
+        }
+
+        .season-card li:before {
+            content: "✓";
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .weather-tips {
+            background: linear-gradient(135deg, var(--light-bg) 0%, #e8f5e8 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .weather-tips h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .emergency-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .emergency-section h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--secondary-color);
+        }
+
+        .reference {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .season-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">SeedHub</a>
+            <ul class="nav-links">
+                <li><a href="index.html#routes">徒步路线</a></li>
+                <li><a href="index.html#stories">徒步故事</a></li>
+                <li><a href="index.html#photography">摄影作品</a></li>
+                <li><a href="index.html#knowledge">徒步知识</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">首页</a> > <a href="index.html#knowledge">徒步知识</a> > 气候应对指南
+        </div>
+
+        <header class="article-header">
+            <h1 class="article-title">气候应对指南</h1>
+            <p class="article-subtitle">掌握四季徒步技巧，安全应对各种天气变化</p>
+        </header>
+
+        <section class="content-section">
+            <h2 class="section-title">四季徒步应对策略</h2>
+            <div class="season-grid">
+                <div class="season-card">
+                    <h3>🌸 春季徒步（3-5月）</h3>
+                    <ul>
+                        <li>气温变化大，早晚温差明显</li>
+                        <li>准备防风外套和保暖内衣</li>
+                        <li>携带防水雨具，春雨频繁</li>
+                        <li>注意防花粉过敏</li>
+                        <li>选择透气性好的多层穿搭</li>
+                        <li>关注天气预报，避开强对流天气</li>
+                    </ul>
+                </div>
+
+                <div class="season-card">
+                    <h3>☀️ 夏季徒步（6-8月）</h3>
+                    <ul>
+                        <li>高温炎热，紫外线强烈</li>
+                        <li>选择早晨或傍晚出发</li>
+                        <li>准备充足的饮用水（每小时500ml）</li>
+                        <li>使用SPF30+防晒霜</li>
+                        <li>穿着浅色、透气的速干衣物</li>
+                        <li>携带遮阳帽和太阳镜</li>
+                        <li>注意防中暑，准备藿香正气水</li>
+                    </ul>
+                </div>
+
+                <div class="season-card">
+                    <h3>🍂 秋季徒步（9-11月）</h3>
+                    <ul>
+                        <li>昼夜温差大，需灵活调节</li>
+                        <li>采用洋葱式分层穿搭</li>
+                        <li>准备轻薄羽绒服或抓绒衣</li>
+                        <li>注意防风，山区风力较大</li>
+                        <li>携带保温水壶</li>
+                        <li>关注日落时间，合理安排行程</li>
+                    </ul>
+                </div>
+
+                <div class="season-card">
+                    <h3>❄️ 冬季徒步（12-2月）</h3>
+                    <ul>
+                        <li>严寒低温，做好保暖措施</li>
+                        <li>选择难度较低的路线</li>
+                        <li>穿着防滑登山鞋或加装冰爪</li>
+                        <li>准备保温衣物和热饮</li>
+                        <li>注意防冻伤，保护手脚</li>
+                        <li>缩短徒步时间，避免夜间行走</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">恶劣天气应对</h2>
+            
+            <div class="weather-tips">
+                <h3>🌧️ 雨天徒步</h3>
+                <ul>
+                    <li><strong>装备准备：</strong>防水外套、防水背包套、防滑鞋套</li>
+                    <li><strong>路线选择：</strong>避开容易积水和泥泞的路段</li>
+                    <li><strong>安全注意：</strong>小心湿滑路面，降低行走速度</li>
+                    <li><strong>保暖措施：</strong>及时更换湿透的衣物</li>
+                </ul>
+            </div>
+
+            <div class="weather-tips">
+                <h3>💨 大风天气</h3>
+                <ul>
+                    <li><strong>服装选择：</strong>贴身防风外套，避免宽松衣物</li>
+                    <li><strong>路线调整：</strong>避开山脊和开阔地带</li>
+                    <li><strong>行走技巧：</strong>降低重心，小步稳行</li>
+                    <li><strong>装备固定：</strong>确保背包和装备牢固</li>
+                </ul>
+            </div>
+
+            <div class="weather-tips">
+                <h3>🌫️ 雾霾天气</h3>
+                <ul>
+                    <li><strong>能见度：</strong>能见度低于50米时应停止徒步</li>
+                    <li><strong>导航工具：</strong>依赖GPS和指南针导航</li>
+                    <li><strong>团队行进：</strong>保持紧密队形，定时清点人数</li>
+                    <li><strong>标记路径：</strong>使用彩带标记来路</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="emergency-section">
+                <h3>⚠️ 极端天气应急处理</h3>
+                <ul>
+                    <li><strong>雷电天气：</strong>立即寻找低洼地带避雷，远离金属物品和高大树木</li>
+                    <li><strong>暴雨山洪：</strong>迅速转移到高地，避开河谷和低洼地区</li>
+                    <li><strong>暴雪天气：</strong>寻找避风处搭建临时庇护所，保存体力等待救援</li>
+                    <li><strong>高温中暑：</strong>立即转移到阴凉处，解开衣物散热，补充水分</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">气象知识补充</h2>
+            <p>了解基本的气象知识对徒步安全至关重要：</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>云层观察：</strong>积雨云预示雷雨，卷云预示天气变化</li>
+                <li><strong>风向变化：</strong>风向突变通常伴随天气系统移动</li>
+                <li><strong>气压变化：</strong>气压下降预示恶劣天气来临</li>
+                <li><strong>温度梯度：</strong>海拔每升高100米，温度下降0.6°C</li>
+            </ul>
+        </section>
+
+        <div class="reference">
+            <p><strong>参考资料：</strong></p>
+            <p>1. 《登山基础：山区徒步、露营、郊游指南》- 装备选择与安全须知</p>
+            <p>2. REI Co-op - 十大必备徒步装备指南</p>
+            <p>3. 美国国家公园管理局 - 徒步安全指南</p>
+        </div>
+
+        <a href="index.html#knowledge" class="back-link">← 返回徒步知识</a>
+    </div>
+</body>
+</html>

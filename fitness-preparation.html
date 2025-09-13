@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>体能准备指南 - SeedHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --medium-gray: #999999;
+            --white: #ffffff;
+            --accent: #ff6b35;
+            --success-green: #28a745;
+            --info-blue: #007bff;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-black);
+            background: var(--white);
+        }
+
+        /* MoMA风格的导航栏 */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-black);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--primary-black);
+            text-decoration: none;
+        }
+
+        .back-link {
+            font-size: 16px;
+            color: var(--primary-black);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .back-link:hover {
+            opacity: 0.6;
+        }
+
+        /* 主要内容 */
+        .main-content {
+            margin-top: 80px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 60px 30px;
+        }
+
+        .article-header {
+            margin-bottom: 60px;
+            border-bottom: 3px solid var(--success-green);
+            padding-bottom: 30px;
+        }
+
+        .article-title {
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .article-subtitle {
+            font-size: 20px;
+            color: var(--medium-gray);
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        .article-meta {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--medium-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 内容区域 */
+        .content-section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .section-intro {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            color: var(--secondary-black);
+        }
+
+        /* 训练计划网格 */
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .training-card {
+            border: 2px solid var(--light-gray);
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .training-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--success-green);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .training-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .training-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .training-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .training-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--success-green);
+        }
+
+        .training-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: var(--secondary-black);
+        }
+
+        .training-details {
+            list-style: none;
+        }
+
+        .training-details li {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .training-details li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* 训练计划表 */
+        .training-schedule {
+            background: var(--light-gray);
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .schedule-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .schedule-table th {
+            background: var(--primary-black);
+            color: var(--white);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .schedule-table tr:hover {
+            background: var(--light-gray);
+        }
+
+        /* 体能测试 */
+        .fitness-test {
+            background: var(--info-blue);
+            color: var(--white);
+            padding: 50px 40px;
+            margin: 60px 0;
+        }
+
+        .fitness-test h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .test-item {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .test-item h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .test-standards {
+            list-style: none;
+        }
+
+        .test-standards li {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .test-standards li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success-green);
+            font-weight: bold;
+        }
+
+        /* 营养建议 */
+        .nutrition-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .nutrition-card {
+            border-left: 5px solid var(--accent);
+            padding: 25px;
+            background: var(--light-gray);
+        }
+
+        .nutrition-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .nutrition-tips {
+            list-style: none;
+        }
+
+        .nutrition-tips li {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .nutrition-tips li::before {
+            content: '🥗';
+            position: absolute;
+            left: 0;
+            font-size: 12px;
+        }
+
+        /* 进度追踪 */
+        .progress-tracker {
+            background: var(--primary-black);
+            color: var(--white);
+            padding: 50px 40px;
+            margin: 60px 0;
+        }
+
+        .progress-tracker h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--accent);
+        }
+
+        .progress-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-item {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .progress-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 40px 20px;
+            }
+            
+            .training-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .training-schedule {
+                padding: 20px;
+            }
+            
+            .schedule-table {
+                font-size: 14px;
+            }
+            
+            .fitness-test {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">SeedHub</a>
+            <a href="index.html#knowledge" class="back-link">← 返回知识库</a>
+        </nav>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="main-content">
+        <div class="article-header">
+            <h1 class="article-title">体能准备指南</h1>
+            <p class="article-subtitle">科学训练，为山野探索打造强健体魄</p>
+            <div class="article-meta">更新时间：2024年1月 | 阅读时间：25分钟</div>
+        </div>
+
+        <!-- 引言 -->
+        <section class="content-section">
+            <p class="section-intro">
+                徒步是一项对体能要求较高的运动，良好的身体素质是安全完成徒步的基础。<mcreference link="https://www.rei.com/learn/expert-advice/hiking-fitness.html" index="3">3</mcreference> 根据REI的专业建议，系统的体能训练应该在徒步前6-8周开始，包括心肺耐力、肌肉力量、平衡协调等多个方面。
+            </p>
+        </section>
+
+        <!-- 体能评估 -->
+        <section class="fitness-test">
+            <h3>🏃‍♂️ 体能自测标准</h3>
+            <div class="test-grid">
+                <div class="test-item">
+                    <h4>心肺耐力测试</h4>
+                    <ul class="test-standards">
+                        <li>连续快走30分钟不感到过度疲劳</li>
+                        <li>爬楼梯10层不气喘吁吁</li>
+                        <li>静息心率60-80次/分钟</li>
+                        <li>运动后心率恢复正常时间<5分钟</li>
+                    </ul>
+                </div>
+
+                <div class="test-item">
+                    <h4>肌肉力量测试</h4>
+                    <ul class="test-standards">
+                        <li>深蹲20次标准动作</li>
+                        <li>俯卧撑15次（女性可膝盖着地）</li>
+                        <li>平板支撑保持60秒</li>
+                        <li>单腿站立保持30秒</li>
+                    </ul>
+                </div>
+
+                <div class="test-item">
+                    <h4>柔韧性测试</h4>
+                    <ul class="test-standards">
+                        <li>坐位体前屈触及脚尖</li>
+                        <li>肩关节后伸双手能够相握</li>
+                        <li>颈部左右转动各90度</li>
+                        <li>踝关节背屈达到20度</li>
+                    </ul>
+                </div>
+
+                <div class="test-item">
+                    <h4>平衡协调测试</h4>
+                    <ul class="test-standards">
+                        <li>闭眼单腿站立15秒</li>
+                        <li>直线行走10步不偏离</li>
+                        <li>原地转圈5次不头晕</li>
+                        <li>跳跃落地保持稳定</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 训练计划 -->
+        <section class="content-section">
+            <h2 class="section-title">系统训练计划</h2>
+            <div class="training-grid">
+                <div class="training-card">
+                    <span class="training-icon">💪</span>
+                    <h3 class="training-title">力量训练</h3>
+                    <p class="training-description">增强腿部、核心和上肢力量，提高负重行走能力和身体稳定性。</p>
+                    <ul class="training-details">
+                        <li>深蹲：3组 × 15-20次</li>
+                        <li>弓步蹲：3组 × 12次/腿</li>
+                        <li>平板支撑：3组 × 30-60秒</li>
+                        <li>俯卧撑：3组 × 10-15次</li>
+                        <li>提踵：3组 × 20次</li>
+                        <li>频率：每周3次，隔天进行</li>
+                    </ul>
+                </div>
+
+                <div class="training-card">
+                    <span class="training-icon">🏃</span>
+                    <h3 class="training-title">有氧训练</h3>
+                    <p class="training-description">提高心肺功能和耐力，增强长时间运动的能力。</p>
+                    <ul class="training-details">
+                        <li>快走：每次45-60分钟</li>
+                        <li>慢跑：每次30-45分钟</li>
+                        <li>爬楼梯：每次15-20分钟</li>
+                        <li>游泳：每次30-45分钟</li>
+                        <li>骑行：每次60-90分钟</li>
+                        <li>频率：每周4-5次</li>
+                    </ul>
+                </div>
+
+                <div class="training-card">
+                    <span class="training-icon">🧘</span>
+                    <h3 class="training-title">柔韧性训练</h3>
+                    <p class="training-description">改善关节活动度，预防运动损伤，提高动作效率。</p>
+                    <ul class="training-details">
+                        <li>腿部拉伸：大腿前后侧、小腿</li>
+                        <li>髋关节拉伸：髋屈肌、臀部</li>
+                        <li>脊柱拉伸：胸椎、腰椎</li>
+                        <li>肩颈拉伸：肩胛骨、颈部</li>
+                        <li>踝关节活动：背屈、跖屈</li>
+                        <li>频率：每天15-20分钟</li>
+                    </ul>
+                </div>
+
+                <div class="training-card">
+                    <span class="training-icon">⚖️</span>
+                    <h3 class="training-title">平衡训练</h3>
+                    <p class="training-description">提高身体协调性和反应能力，适应复杂地形。</p>
+                    <ul class="training-details">
+                        <li>单腿站立：每腿30-60秒</li>
+                        <li>平衡板训练：每次10-15分钟</li>
+                        <li>瑜伽平衡体式：树式、鹰式</li>
+                        <li>不稳定面训练：软垫、平衡球</li>
+                        <li>动态平衡：单腿跳跃、侧步</li>
+                        <li>频率：每周3次</li>
+                    </ul>
+                </div>
+
+                <div class="training-card">
+                    <span class="training-icon">🎒</span>
+                    <h3 class="training-title">负重训练</h3>
+                    <p class="training-description">模拟实际徒步条件，适应背包负重行走。</p>
+                    <ul class="training-details">
+                        <li>负重快走：背包重量逐渐增加</li>
+                        <li>爬坡训练：寻找坡度适中的路线</li>
+                        <li>楼梯训练：负重爬楼梯</li>
+                        <li>重量递增：从5kg开始，每周增加1-2kg</li>
+                        <li>时间递增：从30分钟到2小时</li>
+                        <li>频率：每周2次</li>
+                    </ul>
+                </div>
+
+                <div class="training-card">
+                    <span class="training-icon">🧠</span>
+                    <h3 class="training-title">功能性训练</h3>
+                    <p class="training-description">模拟徒步中的实际动作，提高运动专项能力。</p>
+                    <ul class="training-details">
+                        <li>台阶上下：模拟翻越障碍</li>
+                        <li>侧向移动：提高横向稳定性</li>
+                        <li>旋转动作：增强核心控制</li>
+                        <li>多平面运动：前后、左右、旋转</li>
+                        <li>反应训练：快速方向改变</li>
+                        <li>频率：每周2-3次</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8周训练计划表 -->
+        <section class="training-schedule">
+            <h3 class="schedule-title">8周渐进式训练计划</h3>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>周次</th>
+                        <th>训练重点</th>
+                        <th>有氧训练</th>
+                        <th>力量训练</th>
+                        <th>负重训练</th>
+                        <th>休息日</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>第1-2周</td>
+                        <td>基础适应</td>
+                        <td>快走30分钟，每周4次</td>
+                        <td>基础动作，每周3次</td>
+                        <td>无负重</td>
+                        <td>每周2天</td>
+                    </tr>
+                    <tr>
+                        <td>第3-4周</td>
+                        <td>强度提升</td>
+                        <td>快走45分钟，每周4次</td>
+                        <td>增加组数，每周3次</td>
+                        <td>5kg，30分钟</td>
+                        <td>每周2天</td>
+                    </tr>
+                    <tr>
+                        <td>第5-6周</td>
+                        <td>耐力建设</td>
+                        <td>快走60分钟，每周5次</td>
+                        <td>增加难度，每周3次</td>
+                        <td>8kg，45分钟</td>
+                        <td>每周2天</td>
+                    </tr>
+                    <tr>
+                        <td>第7-8周</td>
+                        <td>专项准备</td>
+                        <td>长距离训练，每周4次</td>
+                        <td>维持强度，每周2次</td>
+                        <td>10-12kg，60分钟</td>
+                        <td>每周2天</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 营养建议 -->
+        <section class="content-section">
+            <h2 class="section-title">营养与恢复</h2>
+            <p class="section-intro">
+                合理的营养摄入和充分的恢复是训练效果的重要保障。
+            </p>
+            
+            <div class="nutrition-section">
+                <div class="nutrition-card">
+                    <h4>训练前营养</h4>
+                    <ul class="nutrition-tips">
+                        <li>训练前2-3小时进食，以碳水化合物为主</li>
+                        <li>避免高脂肪、高纤维食物</li>
+                        <li>充分补充水分</li>
+                        <li>可适量摄入咖啡因提高表现</li>
+                    </ul>
+                </div>
+
+                <div class="nutrition-card">
+                    <h4>训练中补给</h4>
+                    <ul class="nutrition-tips">
+                        <li>每15-20分钟补充150-200ml水分</li>
+                        <li>长时间训练需补充电解质</li>
+                        <li>超过60分钟的训练需补充碳水</li>
+                        <li>注意身体信号，及时补给</li>
+                    </ul>
+                </div>
+
+                <div class="nutrition-card">
+                    <h4>训练后恢复</h4>
+                    <ul class="nutrition-tips">
+                        <li>训练后30分钟内补充蛋白质和碳水</li>
+                        <li>蛋白质：碳水化合物 = 1:3的比例</li>
+                        <li>充分补充水分和电解质</li>
+                        <li>摄入抗氧化食物促进恢复</li>
+                    </ul>
+                </div>
+
+                <div class="nutrition-card">
+                    <h4>日常饮食</h4>
+                    <ul class="nutrition-tips">
+                        <li>保证充足的蛋白质摄入（1.2-1.6g/kg体重）</li>
+                        <li>复合碳水化合物提供持续能量</li>
+                        <li>健康脂肪占总热量的20-30%</li>
+                        <li>多样化饮食，确保微量元素充足</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 进度追踪 -->
+        <section class="progress-tracker">
+            <h3>📊 训练进度追踪</h3>
+            <div class="progress-items">
+                <div class="progress-item">
+                    <span class="progress-number">3-5</span>
+                    <span class="progress-label">每周训练次数</span>
+                </div>
+                <div class="progress-item">
+                    <span class="progress-number">60-90</span>
+                    <span class="progress-label">每次训练分钟数</span>
+                </div>
+                <div class="progress-item">
+                    <span class="progress-number">8</span>
+                    <span class="progress-label">完整训练周期</span>
+                </div>
+                <div class="progress-item">
+                    <span class="progress-number">15kg</span>
+                    <span class="progress-label">目标负重能力</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section class="content-section">
+            <h2 class="section-title">常见问题解答</h2>
+            
+            <div class="training-grid">
+                <div class="training-card">
+                    <h3 class="training-title">Q: 训练中出现疼痛怎么办？</h3>
+                    <p class="training-description">
+                        区分正常的肌肉酸痛和异常疼痛。肌肉酸痛是正常的，但关节疼痛、刺痛或持续疼痛需要立即停止训练并寻求专业建议。
+                    </p>
+                </div>
+
+                <div class="training-card">
+                    <h3 class="training-title">Q: 如何避免训练过度？</h3>
+                    <p class="training-description">
+                        遵循渐进原则，每周训练强度增加不超过10%。注意身体信号，确保充足睡眠和恢复时间。
+                    </p>
+                </div>
+
+                <div class="training-card">
+                    <h3 class="training-title">Q: 年龄较大如何调整训练？</h3>
+                    <p class="training-description">
+                        延长适应期，降低训练强度，增加柔韧性和平衡训练比重，更加注重恢复和营养。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 返回链接 -->
+        <div style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 2px solid var(--light-gray);">
+            <a href="index.html#knowledge" class="back-link" style="font-size: 18px; padding: 15px 30px; border: 2px solid var(--primary-black); text-decoration: none; display: inline-block; transition: all 0.3s ease;">返回知识库</a>
+        </div>
+    </main>
+</body>
+</html>
