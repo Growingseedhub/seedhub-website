@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeedHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --medium-gray: #999999;
+            --white: #ffffff;
+            --accent: #ff6b35;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.4;
+            color: var(--primary-black);
+            background: var(--white);
+        }
+
+        /* 导航栏 */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--primary-black);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary-black);
+            font-size: 16px;
+            font-weight: 400;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-menu a:hover {
+            opacity: 0.6;
+        }
+
+        /* 主要内容容器 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero区域 */
+        .hero {
+            margin-top: 80px;
+            padding: 60px 0;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 120px);
+            font-weight: 700;
+            letter-spacing: -3px;
+            line-height: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--medium-gray);
+            margin-bottom: 50px;
+            max-width: 600px;
+        }
+
+        /* 大型图像区域 */
+        .feature-image {
+            width: 100%;
+            height: 70vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 60px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: 300;
+        }
+
+        /* 栏目布局 */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -2px;
+        }
+
+        .section-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .section-nav a {
+            text-decoration: none;
+            color: var(--medium-gray);
+            font-size: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .section-nav a:hover,
+        .section-nav a.active {
+            color: var(--primary-black);
+        }
+
+        /* 内容网格 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .content-item {
+            grid-column: span 4;
+            margin-bottom: 40px;
+        }
+
+        .content-item.large {
+            grid-column: span 8;
+        }
+
+        .content-item.small {
+            grid-column: span 4;
+        }
+
+        .content-image {
+            width: 100%;
+            height: 300px;
+            background: var(--light-gray);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--medium-gray);
+        }
+
+        .content-item.large .content-image {
+            height: 400px;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .content-meta {
+            font-size: 14px;
+            color: var(--medium-gray);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-description {
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--secondary-black);
+        }
+
+        /* 知识库特殊布局 */
+        .knowledge-section {
+            background: var(--light-gray);
+            padding: 100px 0;
+            margin: 100px 0;
+        }
+
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 60px;
+        }
+
+        .knowledge-category {
+            margin-bottom: 50px;
+        }
+
+        .knowledge-category h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .knowledge-list {
+            list-style: none;
+        }
+
+        .knowledge-list li {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            padding-left: 0;
+            color: var(--secondary-black);
+        }
+
+        .knowledge-list li::before {
+            content: '—';
+            margin-right: 15px;
+            color: var(--accent);
+        }
+
+        /* 突出显示区域 */
+        .highlight-section {
+            background: var(--primary-black);
+            color: var(--white);
+            padding: 100px 0;
+            margin: 100px 0;
+        }
+
+        .highlight-content {
+            max-width: 800px;
+        }
+
+        .highlight-title {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -3px;
+            margin-bottom: 30px;
+        }
+
+        .highlight-text {
+            font-size: 20px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* 底部 */
+        .footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid #eee;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            text-decoration: none;
+            color: var(--medium-gray);
+            line-height: 2;
+            transition: color 0.2s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-black);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+            color: var(--medium-gray);
+            font-size: 14px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-item,
+            .content-item.large,
+            .content-item.small {
+                grid-column: span 1;
+            }
+            
+            .knowledge-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        /* 动画效果 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">SeedHub</div>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#routes">路线</a></li>
+                <li><a href="#stories">故事</a></li>
+                <li><a href="#photography">摄影</a></li>
+                <li><a href="#knowledge">知识</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero区域 -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="hero-title">探索<br>山野之美</h1>
+            <p class="hero-subtitle">发现杭州与长三角地区最美的徒步路线，分享每一次山野间的美好时光。</p>
+        </div>
+    </section>
+
+    <!-- 特色图像 -->
+    <div class="feature-image">
+        🏔️ 山野召唤
+    </div>
+
+    <!-- 徒步路线 -->
+    <section id="routes" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">徒步路线</h2>
+                <nav class="section-nav">
+                    <a href="#" class="active">全部</a>
+                    <a href="#">杭州</a>
+                    <a href="#">长三角</a>
+                    <a href="#">高难度</a>
+                </nav>
+            </div>
+            
+            <div class="content-grid">
+                <article class="content-item large">
+                    <div class="content-image">⛰️</div>
+                    <div class="content-meta">推荐路线</div>
+                    <h3 class="content-title">西湖群山环线</h3>
+                    <p class="content-description">从龙井村出发，途径九溪烟树、理安寺、云栖竹径，全程12公里。沿途可欣赏西湖全景，体验杭州独特的茶文化氛围。</p>
+                </article>
+                
+                <article class="content-item">
+                    <div class="content-image">🌲</div>
+                    <div class="content-meta">中等难度</div>
+                    <h3 class="content-title">莫干山竹海探秘</h3>
+                    <p class="content-description">竹海连绵，空气清新，全程8公里，适合亲子徒步。</p>
+                </article>
+                
+                <article class="content-item">
+                    <div class="content-image">🏔️</div>
+                    <div class="content-meta">高难度</div>
+                    <h3 class="content-title">天目山古道</h3>
+                    <p class="content-description">千年古道，全程15公里，春天山花烂漫，秋季层林尽染。</p>
+                </article>
+                
+                <article class="content-item">
+                    <div class="content-image">🌸</div>
+                    <div class="content-meta">季节推荐</div>
+                    <h3 class="content-title">径山寺古道</h3>
+                    <p class="content-description">禅意古道，茶香阵阵，感受千年佛教文化的深厚底蕴。</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 突出显示区域 */
+    <section class="highlight-section">
+        <div class="container">
+            <div class="highlight-content">
+                <h2 class="highlight-title">每一步<br>都是发现</h2>
+                <p class="highlight-text">山野徒步不仅是身体的旅行，更是心灵的净化。在这里，我们记录每一次与自然的邂逅，分享那些藏在山间的秘境与故事。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 徒步故事 -->
+    <section id="stories" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">徒步故事</h2>
+                <nav class="section-nav">
+                    <a href="#" class="active">最新</a>
+                    <a href="#">热门</a>
+                    <a href="#">精选</a>
+                </nav>
+            </div>
+            
+            <div class="content-grid">
+                <article class="content-item">
+                    <div class="content-image">🌧️</div>
+                    <div class="content-meta">2024.03.15</div>
+                    <h3 class="content-title">雨中径山寺</h3>
+                    <p class="content-description">细雨蒙蒙的春日，我们踏上径山古道。雨滴打在竹叶上发出轻柔声响...</p>
+                </article>
+                
+                <article class="content-item">
+                    <div class="content-image">🌅</div>
+                    <div class="content-meta">2024.03.08</div>
+                    <h3 class="content-title">北高峰日出</h3>
+                    <p class="content-description">凌晨四点开始登山，只为看那第一缕阳光洒向西湖的瞬间...</p>
+                </article>
+                
+                <article class="content-item">
+                    <div class="content-image">🍂</div>
+                    <div class="content-meta">2023.11.20</div>
+                    <h3 class="content-title">秋日九溪十八涧</h3>
+                    <p class="content-description">深秋的九溪，满山红叶如火，踩着厚厚落叶听潺潺流水...</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 摄影作品 -->
+    <section id="photography" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">摄影作品</h2>
+                <nav class="section-nav">
+                    <a href="#" class="active">风景</a>
+                    <a href="#">人物</a>
+                    <a href="#">细节</a>
+                </nav>
+            </div>
+            
+            <div class="content-grid">
+                <article class="content-item large">
+                    <div class="content-image">📸</div>
+                    <div class="content-meta">精选作品</div>
+                    <h3 class="content-title">晨雾中的茶园</h3>
+                    <p class="content-description">清晨的龙井茶园，薄雾轻纱般笼罩着层层梯田，茶农开始了一天的劳作，宁静与美好定格在镜头中。</p>
+                </article>
+                
+                <article class="content-item">
+                    <div class="content-image">🌲</div>
+                    <div class="content-meta">自然</div>
+                    <h3 class="content-title">千年古银杏</h3>
+                    <p class="content-description">天目山深处的古树，历经风雨依然挺立。</p>
+                </article>
+                
+                <article class="content-item">
+                    <div class="content-image">💧</div>
+                    <div class="content-meta">水景</div>
+                    <h3 class="content-title">九溪清流</h3>
+                    <p class="content-description">溪水清澈见底，用慢门捕捉流水的丝绸质感。</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 徒步知识 -->
+    <section id="knowledge" class="knowledge-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">徒步知识</h2>
+            </div>
+            
+            <div class="knowledge-grid">
+                <div class="knowledge-column">
+                    <div class="knowledge-category">
+                        <h3>装备选择</h3>
+                        <ul class="knowledge-list">
+                            <li>选择合适的徒步鞋，确保防滑耐磨</li>
+                            <li>准备透气吸汗的速干衣物</li>
+                            <li>背包容量根据路程选择，一般25-35L</li>
+                            <li>必备雨具，山区天气多变</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="knowledge-category">
+                        <h3>安全须知</h3>
+                        <ul class="knowledge-list">
+                            <li>提前了解路线信息和天气情况</li>
+                            <li>告知家人朋友出行计划</li>
+                            <li>携带急救包和常用药品</li>
+                            <li>保持团队行进，不要单独行动</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="knowledge-category">
+                        <h3>体能准备</h3>
+                        <ul class="knowledge-list">
+                            <li>循序渐进，从简单路线开始</li>
+                            <li>平时保持适量运动习惯</li>
+                            <li>出发前进行热身运动</li>
+                            <li>注意节奏，避免过度疲劳</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="knowledge-column">
+                    <div class="knowledge-category">
+                        <h3>导航技巧</h3>
+                        <ul class="knowledge-list">
+                            <li>学会使用地图和指南针</li>
+                            <li>下载离线地图到手机</li>
+                            <li>注意观察路标和地形特征</li>
+                            <li>GPS设备要充足电并备用电源</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="knowledge-category">
+                        <h3>气候应对</h3>
+                        <ul class="knowledge-list">
+                            <li>春季注意防风保暖，带雨具</li>
+                            <li>夏季防晒防中暑，多饮水</li>
+                            <li>秋季温差大，准备分层衣物</li>
+                            <li>冬季防寒防滑，选择合适路线</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="knowledge-category">
+                        <h3>急救常识</h3>
+                        <ul class="knowledge-list">
+                            <li>扭伤处理：冷敷、固定、休息</li>
+                            <li>中暑急救：阴凉处休息、降温</li>
+                            <li>外伤处理：清洁、消毒、包扎</li>
+                            <li>迷路应对：原地等待、求救信号</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>探索</h4>
+                    <ul>
+                        <li><a href="#">徒步路线</a></li>
+                        <li><a href="#">摄影作品</a></li>
+                        <li><a href="#">徒步故事</a></li>
+                        <li><a href="#">知识库</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>地区</h4>
+                    <ul>
+                        <li><a href="#">杭州山野</a></li>
+                        <li><a href="#">长三角</a></li>
+                        <li><a href="#">季节推荐</a></li>
+                        <li><a href="#">难度分级</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>社区</h4>
+                    <ul>
+                        <li><a href="#">加入我们</a></li>
+                        <li><a href="#">分享故事</a></li>
+                        <li><a href="#">摄影投稿</a></li>
+                        <li><a href="#">徒步活动</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>关于</h4>
+                    <ul>
+                        <li><a href="#">关于SeedHub</a></li>
+                        <li><a href="#">联系方式</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">使用条款</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SeedHub. 用心记录每一次山野之行</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // 为元素添加动画类
+        document.querySelectorAll('.content-item, .knowledge-category').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+
+        // 导航栏滚动效果
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            const header = document.querySelector('.header');
+            
+            if (currentScroll > lastScrollTop && currentScroll > 100) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        });
+    </script>
+</body>
+</html>
